@@ -83,7 +83,7 @@ namespace schoolSystem
                 updatedValue.ogrenci_sinif = txtOgrenciSinif.Text;
 
             db.SaveChanges();
-            MessageBox.Show("Öğrenci Güncellendi", "Bildirim", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Öğrenci Güncellendi.", "Bildirim", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnOgrenciAra_Click(object sender, EventArgs e)
