@@ -97,5 +97,16 @@ namespace schoolSystem
             }
 
         }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            txtOgrenciId.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+            txtOgrenciAdi.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+            txtOgrenciSoyadi.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+            txtOgrenciNo.Text = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
+            txtOgrenciPosta.Text = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+            txtOgrenciTelno.Text = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+            txtOgrenciSinif.Text = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
+        }
     }
 }
