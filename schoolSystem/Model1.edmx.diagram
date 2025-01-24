@@ -4,8 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="184788c9c18c4bcdb231f2e88f42ab4f" Name="Diagram1">
-        <EntityTypeShape EntityType="schoolSystemDBModel.Ogrenciler" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="3536679bf80347d2865739d21a2986f6" Name="Diagram1">
+        <EntityTypeShape EntityType="schoolSystemDBModel.Ogrenciler" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolSystemDBModel.Ogretmenler" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolSystemDBModel.Siniflar" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="schoolSystemDBModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="schoolSystemDBModel.FK_Ogrenciler_Siniflar" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

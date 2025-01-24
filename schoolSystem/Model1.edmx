@@ -15,10 +15,58 @@
           <Property Name="ogrenci_numara" Type="int" />
           <Property Name="ogrenci_posta" Type="varchar" MaxLength="50" />
           <Property Name="ogrenci_telNo" Type="varchar" MaxLength="50" />
-          <Property Name="ogrenci_sinif" Type="varchar" MaxLength="50" />
+          <Property Name="sinif_id" Type="int" />
         </EntityType>
+        <EntityType Name="Ogretmenler">
+          <Key>
+            <PropertyRef Name="ogretmen_id" />
+          </Key>
+          <Property Name="ogretmen_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ogretmen_adi" Type="varchar" MaxLength="50" />
+          <Property Name="ogretmen_soyadi" Type="varchar" MaxLength="50" />
+          <Property Name="ogretmen_posta" Type="varchar" MaxLength="50" />
+          <Property Name="ogretmen_telNo" Type="varchar" MaxLength="50" />
+          <Property Name="ogretmen_alan" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Siniflar">
+          <Key>
+            <PropertyRef Name="sinif_id" />
+          </Key>
+          <Property Name="sinif_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sinif_adi" Type="varchar" MaxLength="50" />
+          <Property Name="sinif_kapasite" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Ogrenciler_Siniflar">
+          <End Role="Siniflar" Type="Self.Siniflar" Multiplicity="0..1" />
+          <End Role="Ogrenciler" Type="Self.Ogrenciler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Siniflar">
+              <PropertyRef Name="sinif_id" />
+            </Principal>
+            <Dependent Role="Ogrenciler">
+              <PropertyRef Name="sinif_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="schoolSystemDBModelStoreContainer">
           <EntitySet Name="Ogrenciler" EntityType="Self.Ogrenciler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ogretmenler" EntityType="Self.Ogretmenler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Siniflar" EntityType="Self.Siniflar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Ogrenciler_Siniflar" Association="Self.FK_Ogrenciler_Siniflar">
+            <End Role="Siniflar" EntitySet="Siniflar" />
+            <End Role="Ogrenciler" EntitySet="Ogrenciler" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -35,17 +83,67 @@
           <Property Name="ogrenci_numara" Type="Int32" />
           <Property Name="ogrenci_posta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ogrenci_telNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ogrenci_sinif" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sinif_id" Type="Int32" />
+          <NavigationProperty Name="Siniflar" Relationship="Self.FK_Ogrenciler_Siniflar" FromRole="Ogrenciler" ToRole="Siniflar" />
         </EntityType>
-        <EntityContainer Name="schoolSystemDBEntities4" annotation:LazyLoadingEnabled="true">
+        <EntityType Name="Ogretmenler">
+          <Key>
+            <PropertyRef Name="ogretmen_id" />
+          </Key>
+          <Property Name="ogretmen_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ogretmen_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ogretmen_soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ogretmen_posta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ogretmen_telNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ogretmen_alan" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Siniflar">
+          <Key>
+            <PropertyRef Name="sinif_id" />
+          </Key>
+          <Property Name="sinif_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sinif_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sinif_kapasite" Type="Int32" />
+          <NavigationProperty Name="Ogrenciler" Relationship="Self.FK_Ogrenciler_Siniflar" FromRole="Siniflar" ToRole="Ogrenciler" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Ogrenciler_Siniflar">
+          <End Role="Siniflar" Type="Self.Siniflar" Multiplicity="0..1" />
+          <End Role="Ogrenciler" Type="Self.Ogrenciler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Siniflar">
+              <PropertyRef Name="sinif_id" />
+            </Principal>
+            <Dependent Role="Ogrenciler">
+              <PropertyRef Name="sinif_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="schoolSystemDBEntities7" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Ogrenciler" EntityType="Self.Ogrenciler" />
+          <EntitySet Name="Ogretmenler" EntityType="Self.Ogretmenler" />
+          <EntitySet Name="Siniflar" EntityType="Self.Siniflar" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_Ogrenciler_Siniflar" Association="Self.FK_Ogrenciler_Siniflar">
+            <End Role="Siniflar" EntitySet="Siniflar" />
+            <End Role="Ogrenciler" EntitySet="Ogrenciler" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="schoolSystemDBModelStoreContainer" CdmEntityContainer="schoolSystemDBEntities4">
+        <EntityContainerMapping StorageEntityContainer="schoolSystemDBModelStoreContainer" CdmEntityContainer="schoolSystemDBEntities7">
           <EntitySetMapping Name="Ogrenciler">
             <EntityTypeMapping TypeName="schoolSystemDBModel.Ogrenciler">
               <MappingFragment StoreEntitySet="Ogrenciler">
@@ -55,7 +153,39 @@
                 <ScalarProperty Name="ogrenci_numara" ColumnName="ogrenci_numara" />
                 <ScalarProperty Name="ogrenci_posta" ColumnName="ogrenci_posta" />
                 <ScalarProperty Name="ogrenci_telNo" ColumnName="ogrenci_telNo" />
-                <ScalarProperty Name="ogrenci_sinif" ColumnName="ogrenci_sinif" />
+                <ScalarProperty Name="sinif_id" ColumnName="sinif_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ogretmenler">
+            <EntityTypeMapping TypeName="schoolSystemDBModel.Ogretmenler">
+              <MappingFragment StoreEntitySet="Ogretmenler">
+                <ScalarProperty Name="ogretmen_id" ColumnName="ogretmen_id" />
+                <ScalarProperty Name="ogretmen_adi" ColumnName="ogretmen_adi" />
+                <ScalarProperty Name="ogretmen_soyadi" ColumnName="ogretmen_soyadi" />
+                <ScalarProperty Name="ogretmen_posta" ColumnName="ogretmen_posta" />
+                <ScalarProperty Name="ogretmen_telNo" ColumnName="ogretmen_telNo" />
+                <ScalarProperty Name="ogretmen_alan" ColumnName="ogretmen_alan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Siniflar">
+            <EntityTypeMapping TypeName="schoolSystemDBModel.Siniflar">
+              <MappingFragment StoreEntitySet="Siniflar">
+                <ScalarProperty Name="sinif_id" ColumnName="sinif_id" />
+                <ScalarProperty Name="sinif_adi" ColumnName="sinif_adi" />
+                <ScalarProperty Name="sinif_kapasite" ColumnName="sinif_kapasite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="schoolSystemDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

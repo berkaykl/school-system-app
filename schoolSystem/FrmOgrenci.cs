@@ -10,14 +10,15 @@ using System.Windows.Forms;
 
 namespace schoolSystem
 {
-    public partial class Form1 : Form
+    public partial class FrmOgrenci : Form
     {
-        public Form1()
+        public FrmOgrenci()
         {
             InitializeComponent();
         }
 
-        schoolSystemDBEntities4 db = new schoolSystemDBEntities4();
+
+        schoolSystemDBEntities7 db = new schoolSystemDBEntities7();
         private void btnOgrenciList_Click(object sender, EventArgs e)
         {
             var ogrenciler = db.Ogrenciler.ToList();
@@ -39,22 +40,28 @@ namespace schoolSystem
             }
 
             Ogrenciler ogrenciler = new Ogrenciler();
+
+            int sinif_id_bul = db.Siniflar.Where(x => x.sinif_adi == txtOgrenciSinif.Text).Select(x => x.sinif_id).FirstOrDefault();
+
             ogrenciler.ogrenci_adi = txtOgrenciAdi.Text;
             ogrenciler.ogrenci_soyadi = txtOgrenciSoyadi.Text;
             ogrenciler.ogrenci_numara = int.Parse(txtOgrenciNo.Text);
             ogrenciler.ogrenci_posta = txtOgrenciPosta.Text;
             ogrenciler.ogrenci_telNo = txtOgrenciTelno.Text;
-            ogrenciler.ogrenci_sinif = txtOgrenciSinif.Text;
+            ogrenciler.sinif_id = sinif_id_bul;
             db.Ogrenciler.Add(ogrenciler);
             db.SaveChanges();
             MessageBox.Show("Öğrenci Eklendi", "Bildirim", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            var ogrenciler_list = db.Ogrenciler.ToList();
+            dataGridView1.DataSource = ogrenciler_list;
         }
 
         private void btnOgrenciSil_Click(object sender, EventArgs e)
         {
             int id = int.Parse(txtOgrenciId.Text);
             var removeValue = db.Ogrenciler.Find(id);
-            db.Ogrenciler.DefaultIfEmpty(removeValue);
+            db.Ogrenciler.Remove(removeValue);
             db.SaveChanges();
             MessageBox.Show("Öğrenci Silindi", "Bildirim", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -80,10 +87,13 @@ namespace schoolSystem
                 updatedValue.ogrenci_telNo = txtOgrenciTelno.Text;
 
             if (!string.IsNullOrEmpty(txtOgrenciSinif.Text))
-                updatedValue.ogrenci_sinif = txtOgrenciSinif.Text;
+                updatedValue.sinif_id = db.Siniflar.Where(x => x.sinif_adi == txtOgrenciSinif.Text).Select(x => x.sinif_id).FirstOrDefault();
 
             db.SaveChanges();
             MessageBox.Show("Öğrenci Güncellendi.", "Bildirim", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            var ogrenciler = db.Ogrenciler.ToList();
+            dataGridView1.DataSource = ogrenciler;
         }
 
         private void btnOgrenciAra_Click(object sender, EventArgs e)
@@ -95,7 +105,6 @@ namespace schoolSystem
             } else {
                 MessageBox.Show("Lütfen geçerli bir ID girin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -106,7 +115,21 @@ namespace schoolSystem
             txtOgrenciNo.Text = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
             txtOgrenciPosta.Text = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
             txtOgrenciTelno.Text = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
-            txtOgrenciSinif.Text = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
+
+            string sinif_id = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
+            var sinif_id2 = int.Parse(sinif_id);
+
+            var text = db.Siniflar.Where(x => x.sinif_id == sinif_id2).Select(y => y.sinif_adi).FirstOrDefault();
+            txtOgrenciSinif.Text = text;
+
+        }
+
+
+        private void frmBtnGeri_Click(object sender, EventArgs e)
+        {
+            FrmAnasayfa frmAnasayfa = new FrmAnasayfa();
+            frmAnasayfa.Show();
+            this.Hide();
         }
     }
 }

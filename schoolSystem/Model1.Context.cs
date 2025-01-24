@@ -13,10 +13,10 @@ namespace schoolSystem
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class schoolSystemDBEntities4 : DbContext
+    public partial class schoolSystemDBEntities7 : DbContext
     {
-        public schoolSystemDBEntities4()
-            : base("name=schoolSystemDBEntities4")
+        public schoolSystemDBEntities7()
+            : base("name=schoolSystemDBEntities7")
         {
         }
     
@@ -26,5 +26,8 @@ namespace schoolSystem
         }
     
         public virtual DbSet<Ogrenciler> Ogrenciler { get; set; }
+        public virtual DbSet<Ogretmenler> Ogretmenler { get; set; }
+        public virtual DbSet<Siniflar> Siniflar { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

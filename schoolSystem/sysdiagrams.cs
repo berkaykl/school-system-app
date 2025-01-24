@@ -12,16 +12,12 @@ namespace schoolSystem
     using System;
     using System.Collections.Generic;
     
-    public partial class Ogrenciler
+    public partial class sysdiagrams
     {
-        public int ogrenci_id { get; set; }
-        public string ogrenci_adi { get; set; }
-        public string ogrenci_soyadi { get; set; }
-        public Nullable<int> ogrenci_numara { get; set; }
-        public string ogrenci_posta { get; set; }
-        public string ogrenci_telNo { get; set; }
-        public Nullable<int> sinif_id { get; set; }
-    
-        public virtual Siniflar Siniflar { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
