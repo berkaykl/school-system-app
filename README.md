@@ -1,4 +1,4 @@
-Windows Forms (.NET Framework) kullanarak geliştirdiğim küçük bir okul yönetim panelinde LINQ sorgularını da aktif bir şekilde kullandım.
+Windows Forms ile geliştirdiğim küçük bir okul yönetim panelinde, Entity Framework'ü CRUD işlemleri ve LINQ sorgularıyla aktif bir şekilde kullandım.
 
 ![1](https://github.com/user-attachments/assets/0bf9519f-3b8c-47d8-9316-7089c4749ecd)
 ![2](https://github.com/user-attachments/assets/3ba6a6c3-cda0-4c54-ad7c-95995e2d7950)
